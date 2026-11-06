@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Lịch Tập Gym - 2 Người</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 pb-4 border-b border-slate-800 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-dumbbell text-emerald-500"></i> Lịch Tập Gym Cặp Đôi
+                </h1>
+                <p class="text-slate-400 text-sm mt-1">Phối hợp lịch tập, chia sẻ bài tập và theo dõi tiến độ cùng nhau</p>
+            </div>
+            <div class="flex items-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <div class="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-sm font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Đối tác 1: Sẵn sàng
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg text-sm font-medium">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span> Đối tác 2: Sẵn sàng
+                </div>
+            </div>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+            <button onclick="switchTab('schedule')" id="btn-schedule" class="px-4 py-2 rounded-xl font-medium text-sm transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-days"></i> Lịch Tuần
+            </button>
+            <button onclick="switchTab('routines')" id="btn-routines" class="px-4 py-2 rounded-xl font-medium text-sm transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-list-check"></i> Bài Tập & Buổi Tập
+            </button>
+            <button onclick="switchTab('timer')" id="btn-timer" class="px-4 py-2 rounded-xl font-medium text-sm transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-stopwatch"></i> Bấm Giờ Nghỉ
+            </button>
+            <button onclick="switchTab('notes')" id="btn-notes" class="px-4 py-2 rounded-xl font-medium text-sm transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-note-sticky"></i> Ghi Chú & Thực Đơn
+            </button>
+        </div>
+
+        <!-- Tab 1: Schedule -->
+        <div id="tab-schedule" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="schedule-container">
+                <!-- Days will be rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Tab 2: Routines -->
+        <div id="tab-routines" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <h3 class="text-lg font-semibold mb-4 text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-fire"></i> Giáo Án Phổ Biến 5 Buổi/Tuần
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-md font-semibold">Buổi 1</span>
+                        <h4 class="font-bold mt-2 text-base">Ngực - Tay Sau</h4>
+                        <p class="text-sm text-slate-400 mt-1">Bench Press, Incline Dumbbell Press, Cable Crossover, Triceps Pushdown.</p>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-md font-semibold">Buổi 2</span>
+                        <h4 class="font-bold mt-2 text-base">Lưng - Tay Trước</h4>
+                        <p class="text-sm text-slate-400 mt-1">Lat Pulldown, Seated Cable Row, Barbell Curl, Hammer Curl.</p>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-md font-semibold">Buổi 3</span>
+                        <h4 class="font-bold mt-2 text-base">Chân - Bụng</h4>
+                        <p class="text-sm text-slate-400 mt-1">Squat, Leg Press, Romanian Deadlift, Plank, Leg Raises.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Timer -->
+        <div id="tab-timer" class="hidden flex flex-col items-center justify-center py-12">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 max-w-md w-full text-center shadow-xl">
+                <h3 class="text-xl font-bold mb-6 text-slate-200">Đồng Hồ Nghỉ Giữa Hiệp</h3>
+                <div id="timer-display" class="text-6xl font-mono font-bold text-emerald-400 mb-8 tracking-wider">01:30</div>
+                <div class="flex justify-center gap-4 mb-6">
+                    <button onclick="setTimer(60)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-medium">60s</button>
+                    <button onclick="setTimer(90)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-medium">90s</button>
+                    <button onclick="setTimer(120)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-medium">120s</button>
+                </div>
+                <div class="flex justify-center gap-4">
+                    <button onclick="startTimer()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-semibold text-white shadow-lg shadow-emerald-900/30">Bắt Đầu</button>
+                    <button onclick="resetTimer()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-semibold text-slate-300">Đặt Lại</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Notes -->
+        <div id="tab-notes" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <h3 class="text-lg font-semibold mb-4 text-emerald-400 flex items-center gap-2">
+                    <i class="fa-solid fa-note-sticky"></i> Ghi Chú & Thực Đơn Chung
+                </h3>
+                <textarea id="shared-notes" class="w-full h-40 bg-slate-950 border border-slate-800 rounded-xl p-4 text-slate-200 focus:outline-none focus:border-emerald-500 resize-none" placeholder="Nhập ghi chú ăn uống, lưu ý tạ, thời gian hẹn nhau..."></textarea>
+                <button onclick="saveNotes()" class="mt-4 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-semibold text-white transition-all">Lưu Ghi Chú</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            ['schedule', 'routines', 'timer', 'notes'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('btn-' + t).className = "px-4 py-2 rounded-xl font-medium text-sm transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800 flex items-center gap-2";
+            });
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            document.getElementById('btn-' + tabName).className = "px-4 py-2 rounded-xl font-medium text-sm transition-all bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 flex items-center gap-2";
+        }
+
+        const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'];
+        const scheduleContainer = document.getElementById('schedule-container');
+
+        days.forEach((day, index) => {
+            scheduleContainer.innerHTML += `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-lg text-emerald-400">${day}</h3>
+                            <span class="text-xs px-2 py-1 bg-slate-800 text-slate-400 rounded-md">17:30 - 19:00</span>
+                        </div>
+                        <input type="text" id="workout-${index}" placeholder="Nhập bài tập (VD: Ngực - Tay Sau)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-200 mb-3 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-slate-800 text-xs">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="accent-emerald-500 w-4 h-4"> P1 đã sẵn sàng</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="accent-indigo-500 w-4 h-4"> P2 đã sẵn sàng</label>
+                    </div>
+                </div>
+            `;
+        });
+
+        let countdown;
+        let timeLeft = 90;
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const secs = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+        }
+        function setTimer(seconds) {
+            clearInterval(countdown);
+            timeLeft = seconds;
+            updateTimerDisplay();
+        }
+        function startTimer() {
+            clearInterval(countdown);
+            countdown = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(countdown);
+                    alert('Hết giờ nghỉ! Vào hiệp tiếp theo thôi!');
+                }
+            }, 1000);
+        }
+        function resetTimer() {
+            clearInterval(countdown);
+            timeLeft = 90;
+            updateTimerDisplay();
+        }
+        function saveNotes() {
+            alert('Đã lưu ghi chú thành công!');
+        }
+    </script>
+</body>
+</html>
